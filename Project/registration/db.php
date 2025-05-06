@@ -1,15 +1,14 @@
 <?php
-// db.php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ebooklibrary"; // Updated to match your database name
+$host = 'localhost';
+$dbname = 'ebooklibrary';
+$username = 'root';
+$password = '';
 
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+$conn = mysql_connect($host, $username, $password);
 
-// Check connection
 if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    die('Connection failed: ' . mysql_error());
 }
+
+mysql_select_db($dbname);
 ?>

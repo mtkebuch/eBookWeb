@@ -44,11 +44,20 @@ label {
 }
 
 .logo {
-    width: 120px;  
+    width: 120px;
     height: auto;
     display: block;
-    margin: 0 auto 20px;  
+    margin: 0 auto 20px;
+    transform: scale(1); 
+    transition: transform 0.4s ease, filter 0.4s ease;
 }
+
+.registration-form:hover .logo {
+    transform: scale(1.15); 
+    
+}
+
+
 
 input {
     width: 100%;
@@ -61,8 +70,23 @@ input {
     color: #E6FFE9;
     box-sizing: border-box;
     transition: border-color 0.3s, background-color 0.3s;
-    opacity: 0;
-    animation: fadeIn 0.6s forwards 0.7s;
+    opacity: 1; 
+    animation: none;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #1A2B2F inset !important;
+    box-shadow: 0 0 0 1000px #1A2B2F inset !important;
+    -webkit-text-fill-color: #E6FFE9 !important;
+    caret-color: #E6FFE9 !important;
+    border: 1px solid #88cc8f !important;
+    transition: background-color 0s ease-in-out 0s !important;
+    animation: none !important;
+    opacity: 1 !important;
 }
 
 input:focus {
@@ -73,17 +97,20 @@ input:focus {
 }
 
 button {
-    width: 100%;
-    padding: 14px;
+    font-family: 'Poppins', sans-serif;
+    width: 200px;
+    padding: 10px;
     background-color: #4C9F70;
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
     opacity: 0;
     animation: fadeIn 0.6s forwards 1s;
+    margin: 0 auto;  
+    display: block;  
 }
 
 button:hover {
@@ -119,4 +146,25 @@ button:active {
         opacity: 1;
         transform: scale(1);
     }
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 30px;
+}
+
+.password-wrapper .password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #ccc;
+}
+
+.error {
+    color: rgb(244, 158, 161) !important;  
 }

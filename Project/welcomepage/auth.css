@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Resetting default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  background: #1B1B2F;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.registration-form {
+  background: linear-gradient(145deg, #2E2F43, #202132);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 400px;
+  animation: blowIn 1s forwards;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #F3F4F6;
+  font-weight: 600;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #F3F4F6;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #88cc8f;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #1A2B2F;
+  color: #E6FFE9;
+  box-sizing: border-box;
+  transition: border-color 0.3s, background-color 0.3s;
+  opacity: 1; 
+  animation: none;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #1A2B2F inset !important;
+  box-shadow: 0 0 0 1000px #1A2B2F inset !important;
+  -webkit-text-fill-color: #E6FFE9 !important;
+  caret-color: #E6FFE9 !important;
+  border: 1px solid #88cc8f !important;
+  transition: background-color 0s ease-in-out 0s !important;
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+input:focus {
+  border-color: #9ae76d;
+  background-color: #203738;
+  box-shadow: 0 0 8px rgba(168, 255, 176, 0.3);
+  outline: none;
+}
+
+button {
+  font-family: 'Poppins', sans-serif;
+  width: 200px;
+  padding: 10px;
+  background-color: #4C9F70;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin: 0 auto;
+  display: block;
+}
+
+button:hover {
+  background-color: #6FE57C;
+  box-shadow: 0 0 15px rgba(197, 255, 163, 0.5);
+  transform: translateY(-3px);
+}
+
+button:active {
+  background-color: #aaebc6;
+  transform: scale(0.98);
+}
+
+.admin-dot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.admin-dot:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.register-text {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.register-text a {
+  color: #4C9F70;
+  font-weight: 600;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
+}
+
+
+@keyframes blowIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.error-message {
+  color: rgb(248, 131, 131);
+  text-align: center;
+}

@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
 
            
             if ($password == $user['Password']) {
-                header("Location: dashboard.php"); 
+              header("Location: dashboard/dashboard.php");
                 exit();
             } else {
                 $error_message = "Incorrect password.";

@@ -11,7 +11,7 @@
 <body>
 
   <div class="gif-intro">
-    <img src="girlnbook.gif" alt="Intro Animation" class="intro-gif">
+    <img src="coffee.gif" alt="Intro Animation" class="intro-gif">
   </div>
 
   <header class="header">
@@ -28,7 +28,7 @@
 
   <main class="hero">
     <div class="container hero-content">
-      <h1>Explore Knowledge</h1>
+      <h1>Enjoy Reading, Anytime, Anywhere</h1>
       <p>Thousands of free eBooks, tutorials, and learning resources await you.<br> Start your E-Libra journey today.</p>
       <div class="cta-buttons">
         <a href="authorization.php" class="btn btn-login">

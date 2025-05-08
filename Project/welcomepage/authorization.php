@@ -44,9 +44,6 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
 
-
-
-
 <div class="registration-form"> 
     <?php if ($error_message): ?>
     <div class="error-message"><?php echo $error_message; ?></div>

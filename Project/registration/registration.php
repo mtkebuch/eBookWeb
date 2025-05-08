@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
                                      VALUES ('$username', '$password', '$email', '$subscription_type')";  
 
                     if (mysqli_query($conn, $insert_query)) {
-                        echo "<script>alert('Registration successful!'); window.location.href='login.php';</script>";
+                        echo "<script>alert('Registration successful!'); window.location.href='mainpage.php';</script>";
                         exit;
                     } else {
                         echo "<script>alert('Database error: " . mysqli_error($conn) . "');</script>";

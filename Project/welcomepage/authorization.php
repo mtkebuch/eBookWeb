@@ -1,5 +1,4 @@
 <?php
-ob_start(); 
 session_start();
 include('../registration/db.php'); 
 
@@ -12,7 +11,7 @@ if (isset($_POST['submit'])) {
     if (empty($email) || empty($password)) {
         $error_message = "Please fill in both fields!";
     } else {
-        $result = $conn->query("SELECT * FROM users WHERE email = '$email'");
+        $result = $conn->query("SELECT * FROM users WHERE Email = '$email'");
 
         if ($result->num_rows == 0) {
             $error_message = "Email does not exist.";
@@ -20,10 +19,12 @@ if (isset($_POST['submit'])) {
             $user = $result->fetch_assoc();
 
             if ($password == $user['Password']) {
-             
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['user_id'] = $user['id'];
-
+                
+                $_SESSION['email'] = $user['Email'];
+                $_SESSION['user_id'] = $user['UserID'];
+                $_SESSION['username'] = $user['Username']; 
+                $_SESSION['subscription_type'] = $user['SubscriptionType']; 
+                
                 
                 header("Location: ../mainpage/mainpage.php");
                 exit();
@@ -33,7 +34,6 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-ob_end_flush(); 
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +54,6 @@ ob_end_flush();
     <a href="admin_login.php" class="admin-dot" title="Admin Access">👨🏻‍💻</a>
     <h2>Login to E-Libra</h2>
 
-    
     <form action="" method="POST">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>

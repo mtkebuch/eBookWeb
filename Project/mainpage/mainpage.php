@@ -29,7 +29,6 @@ if (isset($_GET['addBook'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

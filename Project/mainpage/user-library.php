@@ -1,127 +1,84 @@
 <?php
-session_start();
-include('../registration/db.php');
-
-if (!isset($_SESSION['user_id'])) {
-    die("User not logged in. Please log in to proceed.");
-}
-
-$userID = $_SESSION['user_id'];  
-
-if (isset($_GET['addBook'])) {
-    $bookID = (int)$_GET['addBook'];
-
-    if ($bookID > 0) {
-        $checkQuery = $conn->prepare("SELECT * FROM users_books WHERE UserID = ? AND BookID = ?");
-        $checkQuery->bind_param("ii", $userID, $bookID);
-        $checkQuery->execute();
-        $checkResult = $checkQuery->get_result();
-
-        if ($checkResult->num_rows > 0) {
-            $message = "This book is already in your library!";
-        } else {
-            $query = $conn->prepare("INSERT INTO users_books (UserID, BookID) VALUES (?, ?)");
-            $query->bind_param("ii", $userID, $bookID);
-
-            if ($query->execute()) {
-                $message = "Book added to your library!";
-            } else {
-                $message = "Error adding book to library: " . $query->error;
-            }
-        }
-    } else {
-        $message = "Invalid book ID.";
-    }
-}
-
-if (isset($_GET['removeBook'])) {
-    $bookID = (int)$_GET['removeBook'];
-
-    if ($bookID > 0) {
-        $removeQuery = $conn->prepare("DELETE FROM users_books WHERE UserID = ? AND BookID = ?");
-        $removeQuery->bind_param("ii", $userID, $bookID);
-
-        if ($removeQuery->execute()) {
-            $message = "Book removed from your library!";
-        } else {
-            $message = "Error removing book from library: " . $removeQuery->error;
-        }
-    } else {
-        $message = "Invalid book ID.";
-    }
-}
-
-$searchQuery = "";
-if (isset($_GET['search'])) {
-    $search = $conn->real_escape_string($_GET['search']);
-    $searchQuery = "AND Title LIKE '%$search%'";
-}
-
-$query = $conn->prepare("SELECT books.* FROM books 
-                         JOIN users_books ON books.BookID = users_books.BookID 
-                         WHERE users_books.UserID = ? $searchQuery");
-$query->bind_param("i", $userID);  
-$query->execute();
-$result = $query->get_result();
-
-if (!$result) {
-    die("Error fetching books: " . mysqli_error($conn));
-}
+include('library-action.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Library</title>
-  <link rel="stylesheet" href="user-library.css">
+  <link rel="stylesheet" href="userlibrary.css"> 
 </head>
 <body>
+  <header>
   <div class="header">
-    <h1>Your Library</h1>
+    <h1>MY LIBRARY  <img src="shelf.png"></h1>
+    <nav>
+    <a href="#my-books">My Books</a>
+    <a href="#star-rating" class="rate-link">Rate</a>
+    <a href="#logout">Logout</a>
+    <nav>
   </div>
+</header>
 
-  <div class="search-bar">
-    <form method="GET" action="">
-      <input type="text" name="search" placeholder="Search for books" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-      <button type="submit">Search</button>
-    </form>
-  </div>
-
-  <?php if (isset($message)) { ?>
+  <?php if (!empty($message)) { ?>
     <div class="message-overlay" id="messageOverlay" style="display: flex;">
-      <div class="message">
+      <div class="message <?php echo htmlspecialchars($messageType ?? ''); ?>">
         <p id="messageText"><?php echo htmlspecialchars($message); ?></p>
       </div>
     </div>
   <?php } ?>
 
   <div class="library-content">
-    <?php
-    while ($book = mysqli_fetch_assoc($result)) {
-        echo "<div class='book-card'>";
-        echo "<img src='" . (!empty($book['CoverImage']) ? 'images/' . $book['CoverImage'] : 'images/default.jpg') . "' alt='Book cover'>";
-        echo "<h3>" . htmlspecialchars($book['Title']) . "</h3>"; 
-        echo "<a href='" . htmlspecialchars($book['PDF_FilePath']) . "' target='_blank' class='read-btn'>Read</a>";
-        echo "<a href='?removeBook=" . $book['BookID'] . "' class='remove-btn'>Remove</a>";
-        echo "</div>";
-    }
-    ?>
+    <?php while ($book = mysqli_fetch_assoc($result)) { ?>
+      <div class="book-card">
+        <img src="<?php echo !empty($book['CoverImage']) ? 'images/' . $book['CoverImage'] : 'images/default.jpg'; ?>" alt="Book cover">
+        <h3><?php echo htmlspecialchars($book['Title']); ?></h3>
+        <a href="<?php echo htmlspecialchars($book['PDF_FilePath']); ?>" target="_blank" class="read-btn">Read</a>
+        <a href="?removeBook=<?php echo $book['BookID']; ?>" class="remove-btn">Remove</a>
+      </div>
+    <?php } ?>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var messageOverlay = document.querySelector('.message-overlay');
-      if (messageOverlay) {
-        setTimeout(function() {
-          messageOverlay.classList.add('fade-out');
-          setTimeout(function() {
-            messageOverlay.style.display = 'none';
-          }, 100); 
-        }, 300); 
-      }
-    });
-  </script>
+  <div class="rating-wrapper">
+  <h2>Rate and Review a Book</h2>
+  <form method="POST" class="rating-form-global">
+    <div class="rating-section">
+      <label for="bookID"></label>
+      <select name="bookID" id="bookID" required>
+        <option value="">Choose a book</option>
+        <?php
+          mysqli_data_seek($result, 0); 
+          while ($bookOption = mysqli_fetch_assoc($result)) {
+            echo '<option value="' . $bookOption['BookID'] . '">' . htmlspecialchars($bookOption['Title']) . '</option>';
+          }
+        ?>
+      </select>
+      <br>
 
+      <label for="rating">Rating</label>
+      <br><br>
+      <div class="star-rating" id="star-rating">
+        <img class="star" data-rating="1" src="star.png" alt="1 star">
+        <img class="star" data-rating="2" src="star.png" alt="2 stars">
+        <img class="star" data-rating="3" src="star.png" alt="3 stars">
+        <img class="star" data-rating="4" src="star.png" alt="4 stars">
+        <img class="star" data-rating="5" src="star.png" alt="5 stars">
+      </div>
+    </div>
+
+    <div class="review-section">
+      <label for="reviewText">Review:</label>
+      <textarea name="reviewText" id="reviewText" placeholder="Write your review..." required></textarea>
+    </div>
+
+  
+    <button type="submit" name="submitRatingReview">Send</button>
+  </form>
+</div>
+
+
+  <script src="user-library.js"></script>
 </body>
 </html>

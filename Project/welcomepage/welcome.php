@@ -32,7 +32,7 @@
       <p>Thousands of free eBooks, tutorials, and learning resources await you.<br> Start your E-Libra journey today.</p>
       <div class="cta-buttons">
         <a href="authorization.php" class="btn btn-login">
-          <img src="login1.png" alt="Login Button" class="login-img">
+          <img src="login.png" alt="Login Button" class="login-img">
         </a>
       </div>
     </div>

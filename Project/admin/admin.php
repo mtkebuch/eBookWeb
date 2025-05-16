@@ -11,20 +11,18 @@ if (isset($_POST['submit'])) {
     if (empty($email) || empty($password)) {
         $error_message = "Please fill in both fields!";
     } else {
-        $result = $conn->query("SELECT * FROM users WHERE Email = '$email'");
+        $result = $conn->query("SELECT * FROM admins WHERE Email = '$email'");
 
         if ($result->num_rows == 0) {
-            $error_message = "Email does not exist.";
+            $error_message = "No admin found with this email.";
         } else {
             $user = $result->fetch_assoc();
 
             if ($password == $user['Password']) {
-                
-                $_SESSION['email'] = $user['Email'];
-                $_SESSION['user_id'] = $user['UserID'];
-                $_SESSION['username'] = $user['Username']; 
-               
-                header("Location: ../mainpage/mainpage.php");
+                $_SESSION['admin_email'] = $user['Email'];
+                $_SESSION['admin_username'] = $user['Username'];
+
+                header("Location: admin-dash.php");
                 exit();
             } else {
                 $error_message = "Incorrect password.";
@@ -34,12 +32,13 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Authorization</title>
-  <link rel="stylesheet" href="auth.css">
+  <title>Admin Panel Login</title>
+  <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
@@ -47,24 +46,19 @@ if (isset($_POST['submit'])) {
     <?php if ($error_message): ?>
         <div class="error-message"><?php echo $error_message; ?></div>
     <?php endif; ?>
-    
-    <br>
-    <a href="../admin/admin.php" class="admin-dot" title="Admin Access">👨🏻‍💻</a>
-    <h2>Login to E-Libra</h2>
+
+    <h2>Admin Login</h2>
 
     <form action="" method="POST">
-        <label for="email">Email:</label>
+        <label for="email">Admin Email:</label>
         <input type="email" id="email" name="email" required>
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
 
         <div class="cta-buttons">
-            <button type="submit" name="submit" class="btn btn-login">Log In</button>
+            <button type="submit" name="submit" class="btn btn-login">Login</button>
         </div>
-
-        <br>
-        <p class="register-text">No account? <a href="../registration/registration.php">Register here</a></p>
     </form>
 
 </div>

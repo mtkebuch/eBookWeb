@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  padding: 40px;
+  font-size: 14px;
+}
+
+h1 {
+  text-align: center;
+  color: #4ade80;
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+#tables-container {
+  display: flex;
+  justify-content: center; /* center all h2 horizontally */
+  gap: 20px; /* space between h2 */
+  flex-wrap: wrap; /* wrap if too many */
+}
+#table-data {
+  margin-left: 20px; /* adds space on the left side of table */
+  flex: 1;
+}
+h2 {
+  flex: 0 0 auto;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 600;
+  margin: 0;
+  padding: 10px 20px;
+  background-color: #2a2e3b;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+
+h2 + table {
+  display: inline-block;
+  width: calc(100% - 300px); 
+  vertical-align: top;
+  margin-top: 0;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+th, td {
+  background-color: #1f1f2f;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  color: #4ade80;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-bottom: 2px solid #4ade80;
+}
+
+td {
+  color: #e0ffe4;
+  border-bottom: 1px solid #2a2a3a;
+}
+
+tr:hover td {
+  background-color: #2a2a3a;
+}
+
+a {
+  color: #4ade80;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.actions a {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #121212;
+  background-color: #4ade80;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+.actions a:hover {
+  background-color: #22c55e;
+  transform: scale(1.05);
+}
+
+.actions a.delete {
+  background-color: #ef4444;
+  color: #fff;
+}
+
+.actions a.delete:hover {
+  background-color: #dc2626;
+}
+
+.table-actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+}
+
+.table-actions button, .table-actions a.add {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  background-color: #4ade80;
+  color: #121212;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.table-actions button:hover, .table-actions a.add:hover {
+  background-color: #22c55e;
+  transform: scale(1.05);
+}

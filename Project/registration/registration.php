@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('db.php');  
 
 $usernameErr = $emailErr = $passwordErr = '';
@@ -48,10 +49,17 @@ if (isset($_POST['submit'])) {
                                      VALUES ('$username', '$password', '$email', '$subscription_type')";  
 
                     if (mysqli_query($conn, $insert_query)) {
-                        echo "<script>alert('Registration successful!'); window.location.href='mainpage.php';</script>";
+                        $newUser = mysqli_query($conn, "SELECT * FROM users WHERE Email='$email'")->fetch_assoc();
+
+                        $_SESSION['email'] = $newUser['Email'];
+                        $_SESSION['user_id'] = $newUser['UserID'];
+                        $_SESSION['username'] = $newUser['Username'];
+                        $_SESSION['subscription_type'] = $newUser['SubscriptionType'];
+
+                        header("Location: ../mainpage/mainpage.php");
                         exit;
                     } else {
-                        echo "<script>alert('Database error: " . mysqli_error($conn) . "');</script>";
+                        echo "<script> alert('Something went wrong!');</script>";
                     }
                 }
             } else {
@@ -101,3 +109,4 @@ if (isset($_POST['submit'])) {
 
     <script src="registration.js"></script>
 </body>
+</html>

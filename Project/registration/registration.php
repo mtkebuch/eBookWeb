@@ -45,8 +45,8 @@ if (isset($_POST['submit'])) {
                 } else {
                     
                     $subscription_type = "basic"; 
-                    $insert_query = "INSERT INTO users (Username, Password, Email, SubscriptionType) 
-                                     VALUES ('$username', '$password', '$email', '$subscription_type')";  
+                    $insert_query = "INSERT INTO users (Username, Password, Email) 
+                                     VALUES ('$username', '$password', '$email')";  
 
                     if (mysqli_query($conn, $insert_query)) {
                         $newUser = mysqli_query($conn, "SELECT * FROM users WHERE Email='$email'")->fetch_assoc();

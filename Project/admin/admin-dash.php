@@ -2,7 +2,7 @@
 include('../registration/db.php');
 
 $tables = ['authors', 'books', 'book_reviews', 'genres', 'users'];
-$selectedTable = $_GET['table'] ?? null;
+$selectedTable = $_GET['table'] ?? $tables[0];
 ?>
 
 <!DOCTYPE html>
@@ -12,20 +12,22 @@ $selectedTable = $_GET['table'] ?? null;
   <link rel="stylesheet" href="admin-dash.css">
 </head>
 <body>
-  <h1>Admin Dashboard</h1>
+   <div class="page-title">Admin Dashboard</div>
 
-  <div id="tables-container">
-    <?php foreach ($tables as $table): ?>
-      <h2>
-        <a href="?table=<?= $table ?>" class="table-name"><?= $table ?></a>
-      </h2>
-    <?php endforeach; ?>
-  </div>
+  <form method="GET" id="table-select-form">
+    <label for="table-select">SELECT TABLE</label>
+    <select name="table" id="table-select" onchange="this.form.submit()">
+      <?php foreach ($tables as $table): ?>
+        <option value="<?= $table ?>" <?= $table === $selectedTable ? 'selected' : '' ?>>
+          <?= ucfirst($table) ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+  </form>
 
   <div id="table-data">
     <?php
     if ($selectedTable && in_array($selectedTable, $tables)) {
-      
       $result = mysqli_query($conn, "SELECT * FROM $selectedTable");
 
       if ($result && mysqli_num_rows($result) > 0) {
@@ -46,13 +48,11 @@ $selectedTable = $_GET['table'] ?? null;
           foreach ($row as $val) {
             echo "<td>$val</td>";
           }
-          
           echo "<td><input type='radio' name='id' value='$id'></td>";
           echo "</tr>";
         }
         echo "</table>";
 
-        
         echo "<div class='table-actions'>";
         echo "<button type='submit' formaction='edit.php'>Edit Selected</button>";
         echo "<button type='submit' formaction='delete.php' onclick='return confirm(\"Are you sure?\")'>Delete Selected</button>";
@@ -67,6 +67,5 @@ $selectedTable = $_GET['table'] ?? null;
     mysqli_close($conn);
     ?>
   </div>
-
 </body>
 </html>

@@ -17,5 +17,6 @@ foreach ($tables as $table) {
 }
 
 mysqli_close($conn);
-echo $allTablesOutput;
+echo "<div id='tables-container'>$allTablesOutput</div>";
+
 ?>

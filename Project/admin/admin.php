@@ -47,10 +47,10 @@ if (isset($_POST['submit'])) {
         <div class="error-message"><?php echo $error_message; ?></div>
     <?php endif; ?>
 
-    <h2>Admin Login</h2>
+    <h2>Admin</h2>
 
     <form action="" method="POST">
-        <label for="email">Admin Email:</label>
+        <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
 
         <label for="password">Password:</label>

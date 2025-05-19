@@ -3,16 +3,26 @@ include('../registration/db.php');
 
 $tables = ['authors', 'books', 'book_reviews', 'genres', 'users'];
 $selectedTable = $_GET['table'] ?? $tables[0];
+$message = $_GET['msg'] ?? '';
+$msg_type = $_GET['type'] ?? 'success'; 
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="admin-dash.css">
+  <link rel="stylesheet" href="admindash.css">
 </head>
 <body>
-   <div class="page-title">Admin Dashboard</div>
+  <div class="page-title">Admin Dashboard</div>
+
+ <?php if ($message): ?>
+  <div class="message-overlay">
+    <p class="message <?= $msg_type === 'error' ? 'error' : 'success' ?>">
+      <?= htmlspecialchars($message) ?>
+    </p>
+  </div>
+<?php endif; ?>
 
   <form method="GET" id="table-select-form">
     <label for="table-select">SELECT TABLE</label>
@@ -31,9 +41,7 @@ $selectedTable = $_GET['table'] ?? $tables[0];
       $result = mysqli_query($conn, "SELECT * FROM $selectedTable");
 
       if ($result && mysqli_num_rows($result) > 0) {
-        echo "<br>";
-        echo "<p>$selectedTable Data</p>";
-        echo "<form method='GET' action=''>";
+        echo "<form method='POST'>";
         echo "<input type='hidden' name='table' value='$selectedTable'>";
         echo "<table><tr>";
 
@@ -46,7 +54,7 @@ $selectedTable = $_GET['table'] ?? $tables[0];
           $id = reset($row);
           echo "<tr>";
           foreach ($row as $val) {
-            echo "<td>$val</td>";
+            echo "<td>" . htmlspecialchars($val) . "</td>";
           }
           echo "<td><input type='radio' name='id' value='$id'></td>";
           echo "</tr>";
@@ -54,9 +62,9 @@ $selectedTable = $_GET['table'] ?? $tables[0];
         echo "</table>";
 
         echo "<div class='table-actions'>";
-        echo "<button type='submit' formaction='edit.php'>Edit Selected</button>";
-        echo "<button type='submit' formaction='delete.php' onclick='return confirm(\"Are you sure?\")'>Delete Selected</button>";
-        echo "<a href='add.php?table=$selectedTable' class='add'>Add New</a>";
+        echo "<button type='submit' formaction='crud/edit.php'>Edit Selected</button>";
+        echo "<button type='submit' formaction='crud/delete.php'>Delete Selected</button>";
+        echo "<button type='submit' formaction='crud/add.php'>Add New</button>";
         echo "</div>";
 
         echo "</form>";
@@ -66,6 +74,8 @@ $selectedTable = $_GET['table'] ?? $tables[0];
     }
     mysqli_close($conn);
     ?>
+
+    <script src="admin-dash.js"></script>
   </div>
 </body>
 </html>

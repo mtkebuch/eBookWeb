@@ -1,57 +1,61 @@
 <?php
 include('../../registration/db.php');
 
-$tables = ['authors', 'books', 'book_reviews', 'genres', 'users'];
-$selectedTable = $_POST['table'] ?? '';
+function redirect_with_msg($table = '', $msg = '', $type = 'error') {
+    $url = "../admin-dash.php";
+    $params = [];
 
-if (!$selectedTable || !in_array($selectedTable, $tables)) {
-    header("Location: ../admin-dash.php?msg=" . urlencode("Invalid table.") . "&type=error");
+    if ($table) $params['table'] = $table;
+    if ($msg) $params['msg'] = $msg;
+    if ($type) $params['type'] = $type;
+
+    header("Location: $url?" . http_build_query($params));
     exit;
 }
 
 
-if ($selectedTable === 'users') {
-    header("Location: ../admin-dash.php?table=$selectedTable&msg=" . urlencode("Can't add user. User must register themselves.") . "&type=error");
-    exit;
+$table = $_POST['table'] ?? '';
+if (!$table) {
+    redirect_with_msg('', 'Missing table name', 'error');
 }
 
-if ($selectedTable === 'book_reviews') {
-    header("Location: ../admin-dash.php?table=$selectedTable&msg=" . urlencode("Can't add review directly. User must add it themselves.") . "&type=error");
-    exit;
+
+$restricted = ['users', 'book_reviews', 'messages'];
+if (in_array($table, $restricted)) {
+    $msg = ($table === 'messages') ? 'Cannot add records to this table' : 'This has to be written by user itself';
+    redirect_with_msg('', $msg, 'error');
 }
 
-$columnsResult = mysqli_query($conn, "SHOW COLUMNS FROM $selectedTable");
-if (!$columnsResult) {
-    header("Location: ../admin-dash.php?table=$selectedTable&msg=" . urlencode("Invalid table.") . "&type=error");
-    exit;
+
+$columnsRes = mysqli_query($conn, "SHOW COLUMNS FROM `$table`");
+if (!$columnsRes || mysqli_num_rows($columnsRes) === 0) {
+    redirect_with_msg($table, 'Invalid table structure', 'error');
 }
 
-$columns = [];
+$fields = [];
 $values = [];
 
-while ($col = mysqli_fetch_assoc($columnsResult)) {
-    $colName = $col['Field'];
-    if (preg_match('/(id|ID)$/', $colName)) continue; 
+while ($col = mysqli_fetch_assoc($columnsRes)) {
+    $field = $col['Field'];
 
-    $columns[] = $colName;
-    $val = $_POST[$colName] ?? '';
+    if (preg_match('/(id|ID)$/', $field)) continue;
+
+    $val = $_POST[$field] ?? '';
+    if (trim($val) === '') {
+        redirect_with_msg($table, "Missing value for $field", 'error');
+    }
+
+    $fields[] = "`$field`";
     $values[] = "'" . mysqli_real_escape_string($conn, $val) . "'";
 }
 
-if (count($columns) > 0) {
-    $colsStr = implode(", ", $columns);
-    $valsStr = implode(", ", $values);
+$fieldStr = implode(', ', $fields);
+$valueStr = implode(', ', $values);
 
-    $insertQuery = "INSERT INTO $selectedTable ($colsStr) VALUES ($valsStr)";
-    if (mysqli_query($conn, $insertQuery)) {
-        header("Location: ../admin-dash.php?table=$selectedTable&msg=" . urlencode("Record added successfully.") . "&type=success");
-        exit;
-    } else {
-        header("Location: ../admin-dash.php?table=$selectedTable&msg=" . urlencode("Error adding record: " . mysqli_error($conn)) . "&type=error");
-        exit;
-    }
+$sql = "INSERT INTO `$table` ($fieldStr) VALUES ($valueStr)";
+if (mysqli_query($conn, $sql)) {
+    redirect_with_msg($table, 'Record added successfully', 'success');
 } else {
-    header("Location: ../admin-dash.php?table=$selectedTable&msg=" . urlencode("No columns to insert.") . "&type=error");
-    exit;
+    redirect_with_msg($table, 'Insert failed: ' . mysqli_error($conn), 'error');
 }
 ?>

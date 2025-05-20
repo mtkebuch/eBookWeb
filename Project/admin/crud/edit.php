@@ -1,34 +1,59 @@
 <?php
-include('../registration/db.php');
+include('../../registration/db.php');
 
-$table = $_GET['table'];
-$id = $_GET['id'];
+$table = $_POST['table'] ?? '';
+$id = $_POST['id'] ?? '';
 
-$result = mysqli_query($conn, "SELECT * FROM $table WHERE " . mysqli_fetch_field_direct(mysqli_query($conn, "SELECT * FROM $table"), 0)->name . " = '$id'");
+if (!$table || !$id) {
+    header("Location: ../admin-dash.php?msg=Missing+table+or+ID&type=error");
+    exit;
+}
+
+function getPrimaryKey($conn, $table) {
+    $res = mysqli_query($conn, "SHOW KEYS FROM `$table` WHERE Key_name = 'PRIMARY'");
+    if ($res && mysqli_num_rows($res) > 0) {
+        $row = mysqli_fetch_assoc($res);
+        return $row['Column_name'];
+    }
+    return null;
+}
+
+$pkCol = getPrimaryKey($conn, $table);
+if (!$pkCol) {
+    header("Location: ../admin-dash.php?msg=Primary+key+not+found&type=error");
+    exit;
+}
+
+$idSafe = mysqli_real_escape_string($conn, $id);
+$result = mysqli_query($conn, "SELECT * FROM `$table` WHERE `$pkCol` = '$idSafe' LIMIT 1");
+
+if (!$result || mysqli_num_rows($result) == 0) {
+    header("Location: ../admin-dash.php?msg=Record+not+found&type=error");
+    exit;
+}
+
 $row = mysqli_fetch_assoc($result);
 ?>
 
-<form method="POST">
-  <?php foreach ($row as $key => $value): ?>
-    <label><?= $key ?></label>
-    <input type="text" name="<?= $key ?>" value="<?= htmlspecialchars($value) ?>"><br>
-  <?php endforeach; ?>
-  <input type="hidden" name="table" value="<?= $table ?>">
-  <input type="hidden" name="id" value="<?= $id ?>">
-  <button type="submit" name="save">Save</button>
-</form>
-
-<?php
-if (isset($_POST['save'])) {
-  $updates = [];
-  foreach ($_POST as $key => $value) {
-    if ($key != 'id' && $key != 'table' && $key != 'save') {
-      $updates[] = "$key='" . mysqli_real_escape_string($conn, $value) . "'";
-    }
-  }
-  $idName = mysqli_fetch_field_direct(mysqli_query($conn, "SELECT * FROM $table"), 0)->name;
-  $sql = "UPDATE $table SET " . implode(", ", $updates) . " WHERE $idName = '$id'";
-  mysqli_query($conn, $sql);
-  header("Location: admin-dash.php?table=$table");
-}
-?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit <?= htmlspecialchars($table) ?></title>
+    <link rel="stylesheet" href="../admin-dash.css">
+</head>
+<body>
+<div class="my-form">
+    <h3 class="my-form-title">Edit <?= ucfirst(htmlspecialchars($table)) ?> Record</h3>
+    <form method="POST" action="update.php">
+        <input type="hidden" name="table" value="<?= htmlspecialchars($table) ?>">
+        <input type="hidden" name="id" value="<?= htmlspecialchars($row[$pkCol]) ?>">
+        <?php foreach ($row as $col => $val): ?>
+            <?php if ($col === $pkCol) continue; ?>
+            <label for="<?= $col ?>"><?= htmlspecialchars($col) ?>:</label>
+            <input type="text" name="<?= htmlspecialchars($col) ?>" id="<?= $col ?>" value="<?= htmlspecialchars($val) ?>" required>
+        <?php endforeach; ?>
+        <button type="submit" class="add-btn">Update</button>
+    </form>
+</div>
+</body>
+</html>

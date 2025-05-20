@@ -9,27 +9,22 @@ if (!$table || !$id) {
     exit;
 }
 
+
 $tablesAllowed = ['authors', 'books', 'book_reviews', 'genres', 'users'];
 if (!in_array($table, $tablesAllowed)) {
     header("Location: ../admin-dash.php?msg=" . urlencode("Invalid table.") . "&type=error");
     exit;
 }
 
-// Block delete on books, authors, genres always
-if (in_array($table, ['books', 'authors', 'genres'])) {
-    header("Location: ../admin-dash.php?table=$table&msg=" . urlencode("Deleting $table is not allowed.") . "&type=error");
-    exit;
-}
 
 $idNameResult = mysqli_query($conn, "SELECT * FROM $table LIMIT 1");
 if (!$idNameResult) {
     header("Location: ../admin-dash.php?table=$table&msg=" . urlencode("Invalid table name.") . "&type=error");
     exit;
 }
-
 $idName = mysqli_fetch_field_direct($idNameResult, 0)->name;
 
-// Users: check foreign keys before deleting
+
 if ($table === 'users') {
     $checkReviews = mysqli_query($conn, "SELECT COUNT(*) as cnt FROM book_reviews WHERE UserID = '$id'");
     $rowReviews = mysqli_fetch_assoc($checkReviews);
@@ -46,7 +41,7 @@ if ($table === 'users') {
     }
 }
 
-// book_reviews: allow delete only if user doesn't exist (your rule)
+
 if ($table === 'book_reviews') {
     $userCheck = mysqli_query($conn, "SELECT UserID FROM book_reviews WHERE ReviewID = '$id'");
     if (!$userCheck || mysqli_num_rows($userCheck) == 0) {
@@ -62,6 +57,7 @@ if ($table === 'book_reviews') {
         exit;
     }
 }
+
 
 $deleteQuery = "DELETE FROM $table WHERE $idName = '$id'";
 if (mysqli_query($conn, $deleteQuery)) {

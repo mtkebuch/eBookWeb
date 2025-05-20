@@ -7,17 +7,14 @@ body {
   font-size: 14px;
   min-height: 100vh;
   padding: 20px 20px 40px 20px;
-
 }
 
 h1 {
-  margin: 0 0 10px 0; 
+  margin: 0 0 20px 0;
   color: #45e27e;
   font-size: 40px;
   font-weight: 700;
   text-align: center;
-  margin: 0 0 20px 0;
-  padding: 0;
   text-transform: uppercase;
   letter-spacing: 1.5px;
 }
@@ -30,7 +27,6 @@ h1 {
   margin: 0 0 20px 0;
   padding: 0;
 }
-
 
 form#table-select-form {
   display: flex;
@@ -62,9 +58,9 @@ select#table-select {
   transition: background-color 0.3s, border-color 0.3s;
   min-width: 180px;
   font-family: 'Poppins', sans-serif;
-  -webkit-appearance: none; 
-  -moz-appearance: none; 
-  appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   background-image: none;
 }
 
@@ -76,16 +72,19 @@ select#table-select:focus {
 }
 
 #table-data {
-  width: 100%;
-  max-width: none;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 10px;
+  overflow-x: auto;
 }
 
 table {
   width: 100%;
+  max-width: 900px;
   margin: 0 auto;
   border-collapse: collapse;
+  table-layout: fixed;
+  word-wrap: break-word;
 }
 
 th, td {
@@ -180,9 +179,8 @@ a:hover {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
-
 .message.error {
-  background: linear-gradient(90deg, #b30000, #ff4d4d); 
+  background: linear-gradient(90deg, #b30000, #ff4d4d);
   color: #E6FFE9;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
@@ -206,4 +204,61 @@ a:hover {
 .message-overlay.fade-out {
   opacity: 0;
   transition: opacity 0.5s ease;
+}
+
+.my-form {
+  max-width: 450px;
+  margin: 20px auto;
+  padding: 15px;
+  background: #1f1f2f;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.my-form-title {
+  color: #88cc8f;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.my-form label {
+  display: block;
+  color: #88cc8f;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.my-form input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  border: 1px solid #4ade80;
+  border-radius: 6px;
+  background: #121212;
+  color: #e6ffe9;
+  font-size: 14px;
+  box-sizing: border-box;  
+}
+
+
+.my-form button.add-btn {
+  width: 50%;
+  margin: 20px auto 0 auto; 
+  padding: 12px;
+  background-color: #4ade80;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #121212;
+  cursor: pointer;
+  display: block; 
+  transition: background-color 0.3s ease;
+}
+
+
+.my-form button.add-btn:hover {
+  background-color: #22c55e;
 }

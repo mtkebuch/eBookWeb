@@ -28,6 +28,21 @@ $idSafe = mysqli_real_escape_string($conn, $id);
 $updates = [];
 $errors = [];
 
+
+if ($table === 'books') {
+    $authorID = $_POST['AuthorID'] ?? null;
+    $genreID = $_POST['GenreID'] ?? null;
+
+    
+    if ($authorID === null || mysqli_num_rows(mysqli_query($conn, "SELECT 1 FROM authors WHERE AuthorID = " . intval($authorID))) == 0) {
+        $errors[] = "Invalid AuthorID.";
+    }
+    
+    if ($genreID === null || mysqli_num_rows(mysqli_query($conn, "SELECT 1 FROM genres WHERE GenreID = " . intval($genreID))) == 0) {
+        $errors[] = "Invalid GenreID.";
+    }
+}
+
 foreach ($_POST as $col => $val) {
     if ($col === 'id' || $col === 'table') continue;
     $val = trim($val);

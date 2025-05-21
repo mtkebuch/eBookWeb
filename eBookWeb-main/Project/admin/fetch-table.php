@@ -7,7 +7,7 @@ if (!isset($_GET['table'])) {
 }
 
 $table = $_GET['table'];
-$allowedTables = ['authors', 'books', 'book_reviews', 'genres', 'users'];
+$allowedTables = ['authors', 'books', 'book_reviews', 'genres', 'users','users_books'];
 if (!in_array($table, $allowedTables)) {
   echo "Invalid table.";
   exit;

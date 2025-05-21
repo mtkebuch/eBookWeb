@@ -16,15 +16,15 @@ if (isset($_GET['addBook'])) {
 
     if (mysqli_num_rows($checkResult) > 0) {
         $message = "This book is already in your library!";
-        $messageType = "error";  // Error message
+        $messageType = "error";  
     } else {
         $addQuery = "INSERT INTO users_books (UserID, BookID) VALUES ($userID, $bookID)";
         if (mysqli_query($conn, $addQuery)) {
             $message = "Book successfully added to your library!";
-            $messageType = "success";  // Success message
+            $messageType = "success";  
         } else {
             $message = "An error occurred while adding the book. Please try again.";
-            $messageType = "error";  // Error message
+            $messageType = "error";  
         }
     }
 }

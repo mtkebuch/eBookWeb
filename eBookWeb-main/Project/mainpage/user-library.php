@@ -8,16 +8,18 @@ include('library-action.php');
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Library</title>
-  <link rel="stylesheet" href="userlibrary.css"> 
+  <link rel="stylesheet" href="user-library.css"> 
 </head>
 <body>
   <header>
   <div class="header">
     <h1>MY LIBRARY  <img src="shelf.png"></h1>
     <nav>
-    <a href="#my-books">My Books</a>
-    <a href="#star-rating" class="rate-link">Rate</a>
-    <a href="#logout">Logout</a>
+      <a href="#my-books">My Books</a>
+      <a href="#star-rating" class="rate-link">Rate</a>
+      <a href="logout.php" id="logout" class="logout-link">
+      Logout <img src="logout.png" alt="Logout" style="width:20px; height:20px; vertical-align: middle; margin-left: 8px;" />
+      </a>
     <nav>
   </div>
 </header>
@@ -30,16 +32,23 @@ include('library-action.php');
     </div>
   <?php } ?>
 
-  <div class="library-content">
-    <?php while ($book = mysqli_fetch_assoc($result)) { ?>
-      <div class="book-card">
-        <img src="<?php echo !empty($book['CoverImage']) ? 'images/' . $book['CoverImage'] : 'images/default.jpg'; ?>" alt="Book cover">
-        <h3><?php echo htmlspecialchars($book['Title']); ?></h3>
-        <a href="<?php echo htmlspecialchars($book['PDF_FilePath']); ?>" target="_blank" class="read-btn">Read</a>
-        <a href="?removeBook=<?php echo $book['BookID']; ?>" class="remove-btn">Remove</a>
-      </div>
-    <?php } ?>
-  </div>
+<div class="library-content">
+  <?php while ($book = mysqli_fetch_assoc($result)) { ?>
+    <div class="book-card" style="position: relative;">
+      
+    <a href="?toggleFavorite=<?php echo $book['BookID']; ?>" class="favorite-icon" style="position: absolute; top: 5px; left: 5px;">
+    <img src="<?php echo $book['IsFavorite'] ? 'favorite.png' : 'nofavorite.png'; ?>" alt="Favorite Toggle">
+    </a>
+
+
+      <img src="<?php echo !empty($book['CoverImage']) ? 'images/' . $book['CoverImage'] : 'images/default.jpg'; ?>" alt="Book cover">
+      <h3><?php echo htmlspecialchars($book['Title']); ?></h3>
+      <a href="<?php echo htmlspecialchars($book['PDF_FilePath']); ?>" target="_blank" class="read-btn">Read</a>
+      <a href="?removeBook=<?php echo $book['BookID']; ?>" class="remove-btn">Remove</a>
+    </div>
+  <?php } ?>
+</div>
+
 
   <div class="rating-wrapper">
   <h2>Rate and Review a Book</h2>

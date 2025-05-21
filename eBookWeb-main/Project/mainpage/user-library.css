@@ -325,3 +325,25 @@ h1 {
   margin-bottom: 20px;
 }
 
+.favorite-icon img {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.favorite-icon img.clicked {
+  animation: scaleUp 0.3s forwards;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}

@@ -13,19 +13,16 @@ function redirect_with_msg($table = '', $msg = '', $type = 'error') {
     exit;
 }
 
-
 $table = $_POST['table'] ?? '';
 if (!$table) {
     redirect_with_msg('', 'Missing table name', 'error');
 }
-
 
 $restricted = ['users', 'book_reviews', 'messages'];
 if (in_array($table, $restricted)) {
     $msg = ($table === 'messages') ? 'Cannot add records to this table' : 'This has to be written by user itself';
     redirect_with_msg('', $msg, 'error');
 }
-
 
 $columnsRes = mysqli_query($conn, "SHOW COLUMNS FROM `$table`");
 if (!$columnsRes || mysqli_num_rows($columnsRes) === 0) {
@@ -34,19 +31,39 @@ if (!$columnsRes || mysqli_num_rows($columnsRes) === 0) {
 
 $fields = [];
 $values = [];
+$errors = [];
+
+
+if ($table === 'books') {
+    $authorID = $_POST['AuthorID'] ?? null;
+    $genreID = $_POST['GenreID'] ?? null;
+
+    if ($authorID === null || mysqli_num_rows(mysqli_query($conn, "SELECT 1 FROM authors WHERE AuthorID = " . intval($authorID))) === 0) {
+        $errors[] = "Invalid AuthorID.";
+    }
+    if ($genreID === null || mysqli_num_rows(mysqli_query($conn, "SELECT 1 FROM genres WHERE GenreID = " . intval($genreID))) === 0) {
+        $errors[] = "Invalid GenreID.";
+    }
+}
 
 while ($col = mysqli_fetch_assoc($columnsRes)) {
     $field = $col['Field'];
 
-    if (preg_match('/(id|ID)$/', $field)) continue;
+    
+    if ($col['Key'] === 'PRI' && strpos($col['Extra'], 'auto_increment') !== false) continue;
 
     $val = $_POST[$field] ?? '';
     if (trim($val) === '') {
-        redirect_with_msg($table, "Missing value for $field", 'error');
+        $errors[] = "Field '$field' cannot be empty.";
+        continue;
     }
 
     $fields[] = "`$field`";
     $values[] = "'" . mysqli_real_escape_string($conn, $val) . "'";
+}
+
+if (!empty($errors)) {
+    redirect_with_msg($table, implode(' ', $errors), 'error');
 }
 
 $fieldStr = implode(', ', $fields);

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>E-Libra | Welcome</title>
-  <link rel="stylesheet" href="welc.css">
+  <link rel="stylesheet" href="welcome.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
@@ -26,9 +26,10 @@
     </div>
   </header>
 
-  <main class="hero">
-    <div class="container hero-content">
-      <h1>Enjoy Reading, Anytime, Anywhere</h1>
+<main class="hero">
+  <div class="container hero-content split-hero">
+    <div class="hero-left">
+      <h1>Enjoy Reading</h1>
       <p>Thousands of free eBooks, tutorials, and learning resources await you.<br> Start your E-Libra journey today.</p>
       <div class="cta-buttons">
         <a href="authorization.php" class="btn btn-login">
@@ -36,7 +37,24 @@
         </a>
       </div>
     </div>
-  </main>
+    <div class="hero-right">
+  <div class="book-carousel">
+    <img src="BOOKREC/BOOK1.jpg" alt="Book 1">
+    <img src="BOOKREC/BOOK2.jpg" alt="Book 2">
+    <img src="BOOKREC/BOOK3.jpg" alt="Book 3">
+    <img src="BOOKREC/BOOK4.jpg" alt="Book 4">
+    <img src="BOOKREC/BOOK5.jpg" alt="Book 5">
+    
+    <img src="BOOKREC/BOOK1.jpg" alt="Book 1 repeat">
+    <img src="BOOKREC/BOOK2.jpg" alt="Book 2 repeat">
+    <img src="BOOKREC/BOOK3.jpg" alt="Book 3 repeat">
+    <img src="BOOKREC/BOOK4.jpg" alt="Book 4 repeat">
+    <img src="BOOKREC/BOOK5.jpg" alt="Book 5 repeat">
+   
+  </div>
+</div>
+
+</main>
 
   <section id="about" class="section about-section">
   <div class="container">
@@ -53,6 +71,8 @@
     </div>
   </div>
 </section>
+
+
 
 
 <section id="news" class="section news-section">

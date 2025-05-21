@@ -16,7 +16,7 @@
 
   <header class="header">
     <div class="container">
-      <div class="logo">E-Libra</div>
+      <div class="logo">E-LIBRA</div>
       <nav class="nav-links">
         <a href="#">Home</a>
         <a href="#about">About</a>
@@ -29,13 +29,9 @@
 <main class="hero">
   <div class="container hero-content split-hero">
     <div class="hero-left">
-      <h1>Enjoy Reading</h1>
-      <p>Thousands of free eBooks, tutorials, and learning resources await you.<br> Start your E-Libra journey today.</p>
-      <div class="cta-buttons">
-        <a href="authorization.php" class="btn btn-login">
-          <img src="login.png" alt="Login Button" class="login-img">
-        </a>
-      </div>
+      <h1>TOP PICKS OF THE YEAR</h1>
+      <p>Books that captured thousands of readers’ attention this year, handpicked for popularity.</p>
+     
     </div>
     <div class="hero-right">
   <div class="book-carousel">
@@ -44,26 +40,38 @@
     <img src="BOOKREC/BOOK3.jpg" alt="Book 3">
     <img src="BOOKREC/BOOK4.jpg" alt="Book 4">
     <img src="BOOKREC/BOOK5.jpg" alt="Book 5">
+    <img src="BOOKREC/BOOK6.jpg" alt="Book 6">
+    <img src="BOOKREC/BOOK7.jpg" alt="Book 7">
+    <img src="BOOKREC/BOOK8.jpg" alt="Book 8">
     
     <img src="BOOKREC/BOOK1.jpg" alt="Book 1 repeat">
     <img src="BOOKREC/BOOK2.jpg" alt="Book 2 repeat">
     <img src="BOOKREC/BOOK3.jpg" alt="Book 3 repeat">
     <img src="BOOKREC/BOOK4.jpg" alt="Book 4 repeat">
     <img src="BOOKREC/BOOK5.jpg" alt="Book 5 repeat">
+    <img src="BOOKREC/BOOK6.jpg" alt="Book 6 repeat">
+    <img src="BOOKREC/BOOK7.jpg" alt="Book 7 repeat">
+    <img src="BOOKREC/BOOK8.jpg" alt="Book 8 repeat">
+    
    
   </div>
+   <div class="cta-buttons">
+        <a href="authorization.php" class="btn btn-login">
+          <img src="login.png" alt="Login Button" class="login-img">
+        </a>
+    </div>
 </div>
 
 </main>
 
   <section id="about" class="section about-section">
   <div class="container">
-    <h2>About E-Libra</h2>
+    <h2>ABOUT US</h2>
     <div class="about-content">
       <div class="text-container">
         <p>E-Libra is a digital library dedicated to making knowledge and learning resources easily accessible to everyone, everywhere. Whether you're a student, professional, or just a curious learner, we aim to provide a comprehensive collection of free eBooks, articles, research papers, and tutorials that cover a wide range of topics.</p>
         <p>Our mission is to support your lifelong learning journey by providing high-quality resources at no cost. With a user-friendly platform, E-Libra allows you to explore books, download PDFs, and track your progress in your learning journey.</p>
-        <p>We are continuously expanding our library to include more categories and provide resources for all skill levels.</p>
+        
       </div>
       <div class="gif-container">
         <img src="gif.gif" alt="E-Libra GIF" class="about-gif">

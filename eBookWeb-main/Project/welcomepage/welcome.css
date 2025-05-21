@@ -111,92 +111,102 @@ a {
   transform: scale(1.05);
 }
 
+
 /* HERO */
 .hero {
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 60px 20px;
+  align-items: flex-start; 
+  padding: 40px 40px 80px; 
   background: #1B1B2F;
   color: #fff;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 .hero-content {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
-  gap: 40px;
+  max-width: 1400px;
+  gap: 50px; 
 }
 
-.split-hero {
-  flex-wrap: wrap;
-}
 
-/* Left side of hero */
 .hero-left {
-  flex: 1 1 500px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  max-width: 700px;
 }
 
 .hero-left h1 {
-  font-size: 3rem;
+  font-size: 3rem;  
   color: #88CC8F;
   margin-bottom: 20px;
-  font-weight: 600;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.1;
 }
 
 .hero-left p {
-  font-size: 1.25rem;
-  margin-bottom: 30px;
+  font-size: 1.25rem; 
+  margin-bottom: 0;
   line-height: 1.5;
   color: #ddd;
+  text-align: center;
 }
 
-/* CTA button container */
-.cta-buttons {
-  display: flex;
-  gap: 20px;
-}
 
-.btn-login {
-  display: inline-block;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.login-img {
-  width: 48px;
-  height: 48px;
-}
-
-/* Right side of hero - book carousel */
 .hero-right {
-  flex: 1 1 400px;
-  overflow: hidden; /* Hide scrollbars */
-  max-width: 400px;
-  margin-left: auto;
+  width: 100%; 
+  overflow: hidden;
+  margin-top: 0;
 }
 
 .book-carousel {
   display: flex;
-  width: max-content; /* Fit all images horizontally */
+  width: max-content;
   animation: slideBooks 20s linear infinite;
 }
 
 .book-carousel img {
-  width: 120px; /* Adjust size */
-  margin-right: 10px;
+  height: 180px; 
+  width: auto;
+  margin-right: 20px;
   user-select: none;
   pointer-events: none;
   flex-shrink: 0;
 }
 
-/* Animation for sliding books */
+
+.cta-buttons {
+  display: flex;
+  gap: 30px;
+  margin-top: 40px;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-login {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.btn-login:hover {
+  transform: scale(1.15);
+}
+
+.login-img {
+  width: 64px;
+  height: 64px;
+}
+
+/* Animation */
 @keyframes slideBooks {
   0% {
     transform: translateX(0);
@@ -206,35 +216,51 @@ a {
   }
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .hero-content {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero-left, .hero-right {
-    max-width: 100%;
-    flex: none;
-    margin-left: 0;
-  }
-
+/* Responsive */
+@media (max-width: 1024px) {
   .hero-left h1 {
-    font-size: 2rem;
-    text-align: center;
+    font-size: 2.5rem;
   }
 
   .hero-left p {
-    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  .book-carousel img {
+    height: 140px;
+    margin-right: 15px;
+  }
+
+  .login-img {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-left h1 {
+    font-size: 2rem;
+  }
+
+  .hero-left p {
     font-size: 1rem;
+  }
+
+  .book-carousel img {
+    height: 100px;
+    margin-right: 12px;
+  }
+
+  .login-img {
+    width: 48px;
+    height: 48px;
   }
 }
 
 
-
 /* ABOUT */
 .about-section {
-  background-color: #2a2e3b;
+  background-color: #1b1b2f;
   padding: 40px 10px;
   border-radius: 8px;
   transition: background-color 0.4s ease, transform 0.3s ease;

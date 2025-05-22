@@ -34,7 +34,7 @@ if (isset($_GET['addBook'])) {
 <head>
     <meta charset="UTF-8">
     <title>E-Libra</title>
-    <link rel="stylesheet" href="main-page.css">
+    <link rel="stylesheet" href="mainpage.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -83,7 +83,7 @@ if (isset($_GET['addBook'])) {
   <section class="book-section">
     <div class="book-row">
       <?php
-      $limit = 10;
+      $limit = 12;
       $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
       $offset = ($page - 1) * $limit;
 

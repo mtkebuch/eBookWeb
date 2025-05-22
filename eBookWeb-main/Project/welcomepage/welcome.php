@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>E-Libra | Welcome</title>
-  <link rel="stylesheet" href="welcome.css">
+  <link rel="stylesheet" href="welcome1.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
@@ -69,8 +69,9 @@
     <h2>ABOUT US</h2>
     <div class="about-content">
       <div class="text-container">
-        <p>E-Libra is a digital library dedicated to making knowledge and learning resources easily accessible to everyone, everywhere. Whether you're a student, professional, or just a curious learner, we aim to provide a comprehensive collection of free eBooks, articles, research papers, and tutorials that cover a wide range of topics.</p>
-        <p>Our mission is to support your lifelong learning journey by providing high-quality resources at no cost. With a user-friendly platform, E-Libra allows you to explore books, download PDFs, and track your progress in your learning journey.</p>
+        <p><strong>E-Libra</strong> is your gateway to free knowledge. Explore, download, and enjoy a wide range of eBooks in PDF format — all in one easy-to-use platform.</p>
+        <p>Whether you're studying, researching, or reading for fun, E-Libra helps you learn anytime, anywhere.</p>
+
         
       </div>
       <div class="gif-container">

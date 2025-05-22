@@ -187,21 +187,32 @@ header .logo h1 {
 }
 
 .pagination {
-  margin-top: 20px;
+  width: 100%;
+  margin: 30px 0 10px 0;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .pagination a {
-  margin-right: 5px;
-  text-decoration: none;
-  color: #007BFF;
+  background-color: #2a2e3b;
+  color: #88CC8F;
+  padding: 8px 14px;
+  border-radius: 10px;
   font-size: 0.9rem;
-  transition: color 0.3s ease;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .pagination a:hover {
-  color: #6FE57C;
+  background-color: #88CC8F;
+  color: #1B1B2F;
+  transform: scale(1.05);
 }
+
 
 .description-dot {
   position: absolute;
